@@ -1,0 +1,123 @@
+.app-home {
+  height: 550px;
+  background: #eaea8f;
+  width: 100%;
+  margin-left: 0px;
+}
+.phone {
+  background: white;
+  border: 1px solid white;
+  border-radius: 40px;
+  height: 530px;
+  margin: 5px;
+}
+
+.p-media {
+  padding: 20px 20px 0px 20px;
+  height: 52px;
+  display: block;
+}
+
+.p-mic {
+  width: 64px;
+  height: 10px;
+  background: black;
+  border-radius: 44%;
+  float: left;
+  margin-left: 29%;
+}
+
+.p-camera {
+  width: 30px;
+  height: 30px;
+  background: black;
+  float: left;
+  border-radius: 50%;
+}
+
+.p-sensor {
+  width: 10px;
+  height: 10px;
+  background: black;
+  border-radius: 50%;
+  float: right;
+}
+
+.p-head {
+  background: #f1efb0e6;
+  height: 70px;
+}
+
+.icon-head {
+  float: right;
+}
+
+.lemon {
+  clear: both;
+  float: left;
+  font-size: 30px;
+}
+
+.icon-call {
+  float: right;
+  font-size: 30px;
+}
+
+.icon-battery {
+  margin: 5px;
+}
+
+.img-item {
+  width: 50px;
+}
+
+img {
+  width: 100%;
+}
+
+.p-chat-item-right {
+  clear: both;
+  float: right;
+}
+
+.p-chat-item-left {
+  clear: both;
+}
+
+.fo-input {
+  width: 90%;
+  height: 32px;
+  background: #dad1c6;
+  border-radius: 40px;
+  float: left;
+  margin-left: 15px;
+}
+
+.fo-send {
+  position: absolute;
+  right: 32px;
+  top: 4px;
+}
+
+.p-footer {
+  position: relative;
+}
+.p-body {
+  padding: 10px;
+}
+
+.big-text {
+  position: absolute;
+  top: 34%;
+  font-size: 50px;
+}
+
+.page-left {
+  position: relative;
+}
+.let-chat {
+  position: absolute;
+  left: 45%;
+  bottom: 5%;
+  height: 64px;
+}
