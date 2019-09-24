@@ -31,7 +31,7 @@ export class Home extends Component {
                 <i className="fa fa-battery-half icon-battery"></i>
                 <span> 13:42 PM</span>
               </div>
-              <div className="lemon">Lemon</div>
+              <div className="lemon">nanako</div>
               <div className="icon-call">
                 <i className="fa fa-phone"></i>
               </div>
@@ -50,7 +50,7 @@ export class Home extends Component {
                   <img src="/img/user2.jpg" alt="" />
                 </div>
                 <p className="p-chat-text">i'm ok thanks</p>
-                <div className="per-name">Lisa</div>
+                <div className="per-name">nanako</div>
               </div>
 
               <div className="p-chat-item-left">
@@ -66,7 +66,7 @@ export class Home extends Component {
                   <img src="/img/user2.jpg" alt="" />
                 </div>
                 <p className="p-chat-text">You too !</p>
-                <div className="per-name">Lisa</div>
+                <div className="per-name">nanako</div>
               </div>
             </div>
             <div className="p-footer">

@@ -1,9 +1,16 @@
 import React, { Component } from "react";
-
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 import "./Login.scss";
+import LoginForm from "../../shared/form-login/LoginForm";
+import { connect } from "react-redux";
+import * as userActions from "../../actions/user";
+
 export class Login extends Component {
+  submitLogin = values => {
+    console.log(values);
+  };
+
   render() {
     return (
       <div className="app-login row">
@@ -17,10 +24,7 @@ export class Login extends Component {
               <div className="normal-text"> make us closer together!</div>
             </div>
             <div className="p-regis">
-              <div className="p-ques-regis">
-                Do you have account ?{" "}
-                <span className="p-text-highlight"> register </span> now
-              </div>
+              <div className="p-ques-regis">Do you have an account ?</div>
               <Button
                 variant="primary"
                 type="submit"
@@ -35,31 +39,7 @@ export class Login extends Component {
           <div className="p-login-right">
             <div className="f-login">
               <div className="big-text-login">Login</div>
-              <Form>
-                <Form.Group as={Row} controlId="formPlaintextEmail">
-                  <Form.Label column sm="2">
-                    Email
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="text"
-                      defaultValue="email@example.com"
-                    />
-                  </Col>
-                </Form.Group>
-
-                <Form.Group as={Row} controlId="formPlaintextPassword">
-                  <Form.Label column sm="2">
-                    Password
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control type="password" placeholder="Password" />
-                  </Col>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Form>
+              <LoginForm onSubmit={this.submitLogin} />
             </div>
           </div>
         </div>
@@ -68,4 +48,20 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  return {
+    isLogin: state.authenUser.isLogin
+  };
+};
+const mapDispathToProps = (dispatch, props) => {
+  return {
+    submitLogin: user => {
+      dispatch(userActions.submitLogin(user));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispathToProps
+)(Login);

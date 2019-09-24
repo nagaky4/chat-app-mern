@@ -1,0 +1,16 @@
+.NotifyPortalContainer {
+  position: fixed;
+  right: 5%;
+  z-index: 100;
+  transition: 0.4s;
+  animation: move-top 1.5s forwards;
+}
+
+@keyframes move-top {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 10%;
+  }
+}

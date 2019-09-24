@@ -1,0 +1,17 @@
+{
+    "dbConfig": {
+        "user" : "root",
+        "password" : "123abc"
+    },
+    "server":{
+        "host":"localhost",
+        "port":"3001"
+    },
+    "passport": {
+        "secret_key": "cowhopi-secrect"
+    },
+    "helper": {
+        "saltRounds": 10
+    }
+
+}

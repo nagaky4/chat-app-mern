@@ -1,7 +1,48 @@
 import React, { Component } from "react";
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import axios from "axios";
+import RegisterForm from "../../shared/form-register/RegisterForm";
+import { BASE_URL } from "../../const/index";
+import NotifyPortal from "../../UI/Notify/NotifyPortal";
 
 export class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      registerSucces: false
+    };
+  }
+
+  handleSubmit = values => {
+    this.setState({ ...this.state, isLoading: true });
+    const user = values;
+    console.log(user);
+    axios
+      .post(`${BASE_URL}/user`, { user: user })
+      .then(res => {
+        if (res && res.status === 200) {
+          console.log("insert success");
+          this.setState({
+            isLoading: false,
+            registerSucces: true
+          });
+          setTimeout(() => {
+            this.setState({
+              ...this.state,
+              registerSucces: false
+            });
+          }, 2000);
+        }
+      })
+      .catch(err => {
+        console.log("errr", err);
+        this.setState({
+          ...this.state,
+          isLoading: false
+        });
+      });
+  };
   render() {
     return (
       <div className="app-login row">
@@ -29,42 +70,14 @@ export class Register extends Component {
           <div className="p-login-right">
             <div className="f-login">
               <div className="big-text-login">Register</div>
-              <Form>
-                <Form.Group as={Row} controlId="formPlaintextEmail">
-                  <Form.Label column sm="2">
-                    Email
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="text"
-                      defaultValue="email@example.com"
-                    />
-                  </Col>
-                </Form.Group>
-
-                <Form.Group as={Row}>
-                  <Form.Label column sm="2">
-                    Password
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control type="password" placeholder="Password" />
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row}>
-                  <Form.Label column sm="2">
-                    Confirm password
-                  </Form.Label>
-                  <Col sm="10">
-                    <Form.Control
-                      type="password"
-                      placeholder="Confirm password"
-                    />
-                  </Col>
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
-              </Form>
+              <RegisterForm
+                onSubmit={this.handleSubmit}
+                isLoading={this.state.isLoading}
+                registerSucces={this.state.registerSucces}
+              />
+              {this.state.registerSucces && (
+                <NotifyPortal message="Đăng ký tài khoản thành công!" />
+              )}
             </div>
           </div>
         </div>
