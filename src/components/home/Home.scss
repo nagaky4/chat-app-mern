@@ -17,16 +17,19 @@
     position: relative;
     .big-text {
       position: absolute;
-      top: 34%;
-      font-size: 50px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-35%, -50%);
+      font-size: 44px;
     }
     .let-chat {
-      position: absolute;
-      left: 45%;
-      bottom: 5%;
       height: 64px;
       font-size: 30px;
       transition: 0.4s;
+      position: absolute;
+      left: 50%;
+      bottom: 5%;
+      transform: translate(-35%, -50%);
     }
     .let-chat:hover {
       background: rgb(218, 134, 218);

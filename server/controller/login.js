@@ -23,9 +23,8 @@ router.post("/login", function(req, res, next) {
       req.login(user, { session: false }, err => {
         if (err) {
           console.log(err);
-          res.send(err);
+          res.status(403).json(err);
         }
-        console.log("user ne", user);
         if (savepass) {
           const token = jwt.sign(
             user,
@@ -48,26 +47,10 @@ router.post("/login", function(req, res, next) {
   )(req, res, next);
 });
 
-// passport.authenticate('jwt', { session: false })
+//passport.authenticate('jwt', {session: false})
 router.get("/private", middelwarePassport.checkToken, (req, res) => {
-  if (req.user) {
-    console.log("chứng thực qua token thành công");
+  if (req.user && req.isAuthenticated()) {
     return res.status(200).json({
-      mess: "login authenicated",
-      data: req.user
-    });
-  } else {
-    return res.status(403).json({
-      success: false,
-      message: "Token is not valid"
-    });
-  }
-});
-
-router.get("/authenicateGuest", (req, res, next) => {
-  console.log(req.session);
-  if (req.isAuthenticated()) {
-    res.status(200).json({
       success: true,
       message: "authenicated",
       user: req.user

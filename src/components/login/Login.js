@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-
+import { Redirect } from "react-router-dom";
 import "./Login.scss";
 import LoginForm from "../../shared/form-login/LoginForm";
 import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 
 export class Login extends Component {
-  submitLogin = values => {
+  handleLogin = values => {
     console.log(values);
+    this.props.submitLogin(values);
   };
 
   render() {
+    if (this.props.isLogin) {
+      return <Redirect to="/chat" />;
+    }
     return (
       <div className="app-login row">
         <div className="col-sm-6 text-center">
@@ -39,7 +43,7 @@ export class Login extends Component {
           <div className="p-login-right">
             <div className="f-login">
               <div className="big-text-login">Login</div>
-              <LoginForm onSubmit={this.submitLogin} />
+              <LoginForm onSubmit={this.handleLogin} />
             </div>
           </div>
         </div>
@@ -53,7 +57,7 @@ const mapStateToProps = state => {
     isLogin: state.authenUser.isLogin
   };
 };
-const mapDispathToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     submitLogin: user => {
       dispatch(userActions.submitLogin(user));
@@ -63,5 +67,5 @@ const mapDispathToProps = (dispatch, props) => {
 
 export default connect(
   mapStateToProps,
-  mapDispathToProps
+  mapDispatchToProps
 )(Login);

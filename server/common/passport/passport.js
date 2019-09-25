@@ -18,8 +18,6 @@ module.exports = function(app) {
         passwordField: "password"
       },
       (email, password, done) => {
-        console.log("email", email);
-        console.log("password", password);
         userModal
           .findUserByEmail(email)
           .then(data => {
@@ -57,7 +55,6 @@ module.exports = function(app) {
         userModal
           .findUserByEmail(jwtPayload.email)
           .then(data => {
-            console.log("chứng thực employ qua token thành công");
             var user = {
               _id: data._id,
               email: data.email

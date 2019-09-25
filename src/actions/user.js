@@ -20,7 +20,7 @@ export const loginError = err => {
 export const submitLogin = user => {
   return dispatch =>
     axios
-      .post(`${BASE_URL}/user`, user)
+      .post(`${BASE_URL}/login`, user)
       .then(res => {
         if (res && res.status === 200) {
           dispatch(loginSuccess(res.data));
@@ -53,4 +53,10 @@ export const submitRegister = user => {
         }
       })
       .catch(err => dispatch(loginError(err)));
+};
+
+export const submitLogout = user => {
+  return {
+    type: types.LOG_OUT
+  };
 };

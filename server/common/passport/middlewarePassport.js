@@ -21,7 +21,7 @@ let checkToken = (req, res, next) => {
       } else {
         req.decoded = decoded;
         req.user = decoded;
-        console.log("chứng thực token thành công");
+        console.log("chứng thực token thành công 1");
         next();
       }
     });

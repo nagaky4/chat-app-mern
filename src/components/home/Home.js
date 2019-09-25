@@ -1,15 +1,22 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 
 import "./Home.scss";
 
 export class Home extends Component {
   render() {
+    console.log("this.props", this.props.isLogin, this.props.user);
+
     return (
       <div className="app-home row">
         <div className="page-left col-sm-8">
-          <div className="big-text">Dowload now and enjoy chat</div>
+          <div className="big-text m-auto">
+            {" "}
+            {this.props.user && this.props.user.email
+              ? `Hello ${this.props.user.email}, Nice to meet you ^^`
+              : "Wellcome ^^"}{" "}
+          </div>
           <Button
             className="let-chat"
             variant="primary"
@@ -82,4 +89,14 @@ export class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    isLogin: state.authenUser.isLogin,
+    user: state.authenUser.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(Home);

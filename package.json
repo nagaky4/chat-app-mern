@@ -7,6 +7,7 @@
     "bootstrap": "^4.3.1",
     "concurrently": "^4.1.2",
     "i": "^0.3.6",
+    "jwt-decode": "^2.2.0",
     "node-sass": "^4.12.0",
     "npm": "^6.11.3",
     "radium": "^0.26.0",
@@ -17,7 +18,8 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
-    "redux-form": "^8.2.6"
+    "redux-form": "^8.2.6",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
