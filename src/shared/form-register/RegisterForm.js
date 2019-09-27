@@ -31,7 +31,11 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
       {label}
     </Form.Label>
     <Col sm="10">
-      <Form.Control {...input} placeholder={label} type={type} />
+      <Form.Control
+        {...input}
+        placeholder={touched && error ? error : label}
+        type={type}
+      />
     </Col>
     {touched &&
       (error && (

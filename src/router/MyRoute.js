@@ -4,9 +4,12 @@ import Home from "../components/home/Home";
 import Login from "../components/login/Login";
 import Logout from "../components/logout/Logout";
 
+import WithAuth from "../HOC/WithAuth";
+
 import Register from "../components/register/Register";
 import Chat from "../components/chat/Chat";
-import WithAuth from "../HOC/WithAuth";
+import Profile from "../components/profile/Profile";
+
 export default function MyRoute() {
   return (
     <>
@@ -18,6 +21,7 @@ export default function MyRoute() {
 
         <WithAuth>
           <Route path="/chat" exact={true} component={Chat} />
+          <Route path="/profile" exact={true} component={Profile} />
         </WithAuth>
       </Switch>
     </>

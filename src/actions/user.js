@@ -22,11 +22,13 @@ export const submitLogin = user => {
     axios
       .post(`${BASE_URL}/login`, user)
       .then(res => {
-        if (res && res.status === 200) {
+        if (res) {
           dispatch(loginSuccess(res.data));
         }
       })
-      .catch(err => dispatch(loginError(err)));
+      .catch(err => {
+        dispatch(loginError(err.response.data.message));
+      });
 };
 
 export const registerSuccess = data => {
@@ -46,16 +48,16 @@ export const registerError = err => {
 export const submitRegister = user => {
   return dispatch =>
     axios
-      .post(`${BASE_URL}/user`, user)
+      .post(`${BASE_URL}/register`, user)
       .then(res => {
-        if (res && res.status === 200) {
+        if (res) {
           dispatch(loginSuccess(res.data));
         }
       })
       .catch(err => dispatch(loginError(err)));
 };
 
-export const submitLogout = user => {
+export const submitLogout = () => {
   return {
     type: types.LOG_OUT
   };

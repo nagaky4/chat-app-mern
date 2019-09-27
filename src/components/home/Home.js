@@ -6,8 +6,6 @@ import "./Home.scss";
 
 export class Home extends Component {
   render() {
-    console.log("this.props", this.props.isLogin, this.props.user);
-
     return (
       <div className="app-home row">
         <div className="page-left col-sm-8">
@@ -64,7 +62,7 @@ export class Home extends Component {
                 <div className="img-item">
                   <img src="/img/user1.jpg" alt="" />
                 </div>
-                <p className="p-chat-text">Have a nice day</p>
+                <p className="p-chat-text">Have a nice day nanako</p>
                 <div className="per-name">Lisa</div>
               </div>
 
@@ -76,6 +74,7 @@ export class Home extends Component {
                 <div className="per-name">nanako</div>
               </div>
             </div>
+
             <div className="p-footer">
               <div className="fo-input"></div>
               <div className="fo-send">

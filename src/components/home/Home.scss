@@ -30,9 +30,12 @@
       left: 50%;
       bottom: 5%;
       transform: translate(-35%, -50%);
+      // animation: zoom-zoom 2s infinite;
     }
     .let-chat:hover {
       background: rgb(218, 134, 218);
+      transform: translate(-35%, -50%);
+      animation: none;
     }
   }
 
@@ -96,6 +99,7 @@
         height: auto;
         .p-chat-item-right {
           height: 74px;
+          opacity: 0;
           .img-item {
             @extend %img-one-item;
             float: right;
@@ -114,6 +118,7 @@
 
         .p-chat-item-left {
           clear: both;
+          opacity: 0;
           .img-item {
             @extend %img-one-item;
             float: left;
@@ -133,7 +138,7 @@
         clear: both;
         .fo-send {
           position: absolute;
-          right: 32px;
+          right: 16%;
           top: 4px;
         }
         .fo-input {
@@ -169,5 +174,42 @@
         margin: auto;
       }
     }
+  }
+}
+.p-body div:nth-child(1) {
+  transition: 0.4s;
+  animation: ani-chat 1s forwards;
+}
+.p-body div:nth-child(2) {
+  transition: 0.4s;
+  animation: ani-chat 1s 1s forwards;
+}
+.p-body div:nth-of-type(3) {
+  transition: 0.4s;
+  animation: ani-chat 1s 2s forwards;
+}
+.p-body div:nth-child(4) {
+  transition: 0.4s;
+  animation: ani-chat 1s 3s forwards;
+}
+
+@keyframes zoom-zoom {
+  0% {
+    transform: translate(-35%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-35%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-35%, -50%) scale(1);
+  }
+}
+
+@keyframes ani-chat {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

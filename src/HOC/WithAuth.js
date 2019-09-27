@@ -1,18 +1,11 @@
 import { Component } from "react";
-import AuthHelperMethods from "../helpers/AuthHelperMethods";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose } from "redux";
 
-const Auth = new AuthHelperMethods();
 class WithAuth extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-      loaded: false
-    };
-  }
   componentDidMount() {
-    if (Auth.loggedIn()) {
+    if (this.props.isAuthen) {
       this.setState({ isLogin: true, loaded: true });
     } else {
       this.props.history.push("/login");
@@ -20,9 +13,22 @@ class WithAuth extends Component {
   }
 
   render() {
-    if (this.state.isLogin) {
+    if (this.props.isAuthen) {
       return this.props.children;
     } else return null;
   }
 }
-export default withRouter(WithAuth);
+
+const mapStateToProps = state => {
+  return {
+    isAuthen: state.authenUser.isLogin
+  };
+};
+
+export default compose(
+  withRouter,
+  connect(
+    mapStateToProps,
+    null
+  )
+)(WithAuth);

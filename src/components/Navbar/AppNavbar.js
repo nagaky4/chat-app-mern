@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 import "./AppNavbar.css";
@@ -18,10 +18,33 @@ const AppNavbar = props => {
         <NavLink className="nav-link" to="/" exact activeClassName="active">
           Home
         </NavLink>
+      </Nav>
+      <Nav className="ml-auto ">
         {props.isLogin ? (
-          <NavLink className="nav-link" to="/logout" activeClassName="active">
-            Logout
-          </NavLink>
+          <>
+            <div className="img-avatar">
+              <img src="/img/user1.jpg" alt="" />
+            </div>
+            <NavDropdown className="my-nav-dropdown">
+              <NavLink
+                className="dropdown-item"
+                exact
+                activeClassName="active"
+                to="/profile"
+              >
+                Profile
+              </NavLink>
+
+              <NavLink
+                className="dropdown-item"
+                exact
+                activeClassName="active"
+                to="/logout"
+              >
+                Logout
+              </NavLink>
+            </NavDropdown>
+          </>
         ) : (
           <NavLink className="nav-link" to="/login" activeClassName="active">
             Login

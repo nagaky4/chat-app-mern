@@ -7,6 +7,7 @@ var cors = require("cors");
 var mongoose = require("mongoose");
 
 var getConnectDbString = require("./common/getConnectString");
+var accountApi = require("./api/account");
 var userApi = require("./api/user");
 
 var passport = require("../server/common/passport/passport");
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 passport(app);
 
+app.use("/api", accountApi);
 app.use("/api", userApi);
 app.use("/api", loginController);
 app.get("/", (req, res) => {
@@ -56,6 +58,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
+  console.log("err server", err);
   res.status(err.status || 500);
   res.render("error");
 });

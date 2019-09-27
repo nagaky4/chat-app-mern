@@ -6,8 +6,19 @@ var q = require("q");
  */
 var userSchema = new mongoose.Schema(
   {
-    email: { type: String, unique: true, index: true },
-    password: String,
+    email: { type: String, unique: true, index: true, ref: "account.email" },
+    profile: {
+      firstName: String,
+      lastName: { type: String, default: null },
+      avatar: {
+        type: String,
+        default: "http://localhost:3000/public/images/user_default.png"
+      }
+    },
+    conversationIDs: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "accounts._id" }
+    ],
+    friendIDs: [{ type: mongoose.Schema.Types.ObjectId, ref: "users._id" }],
     status: { type: Boolean, default: false }
   },
   { timestamps: true }
@@ -81,9 +92,15 @@ function findUserByEmail(email, password) {
  * @param {text} - String : text of user
  */
 
-function insertUser(user) {
-  if (user) {
+function insertUser(email) {
+  if (email) {
     var defer = q.defer();
+    let user = {
+      email: email,
+      profile: {
+        firstName: email
+      }
+    };
     userModal.create(user, (err, data) => {
       if (err) {
         console.log("err insert user err ", err);
@@ -138,6 +155,86 @@ function updateUserStatus(user) {
   return false;
 }
 /**
+ * update status user rely on _id
+ * @param {user} - Object user { _id , avatar}
+ */
+function updateUserAvatar(user) {
+  if (user) {
+    var defer = q.defer();
+    userModal.updateOne(
+      { _id: user._id },
+      { profile: { avatar: user.avatar } },
+      (err, data) => {
+        if (err) {
+          console.log("update user avatar err ", err);
+          defer.reject(err);
+        }
+        defer.resolve(data);
+      }
+    );
+    return defer.promise;
+  }
+  return false;
+}
+/**
+ * add new friend
+ * @param {Object} - _idUser : _id user
+ * @param {Object} - _idFriend : _id friend of user
+ *
+ */
+function addFriend(_idUser, _idFriend) {
+  if (_idUser && _idFriend) {
+    var defer = q.defer();
+    userModal.updateOne(
+      { _id: _idUser },
+      {
+        $push: {
+          friendIDs: _idFriend
+        }
+      },
+      (err, data) => {
+        if (err) {
+          console.log("add friend err ", err);
+          defer.reject(err);
+        }
+        defer.resolve(data);
+      }
+    );
+    return defer.promise;
+  }
+  return false;
+}
+
+/**
+ * add new conversation
+ * @param {Object} - _idUser : _id user
+ * @param {Object} - _idFriend : _id friend of user
+ *
+ */
+function addConversation(_idUser, _idFriend) {
+  if (_idUser && _idFriend) {
+    var defer = q.defer();
+    userModal.updateOne(
+      { _id: _idUser },
+      {
+        $push: {
+          conversationIDs: _idFriend
+        }
+      },
+      (err, data) => {
+        if (err) {
+          console.log("add conversation err ", err);
+          defer.reject(err);
+        }
+        defer.resolve(data);
+      }
+    );
+    return defer.promise;
+  }
+  return false;
+}
+
+/**
  * delete user rely on _id
  * @param {user} - Object user {_id}
  */
@@ -162,5 +259,8 @@ module.exports = {
   insertUser,
   updateUser,
   updateUserStatus,
+  updateUserAvatar,
+  addFriend,
+  addConversation,
   deleteUser
 };

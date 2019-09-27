@@ -11,7 +11,6 @@ export default class AuthHelperMethods {
   };
 
   isTokenExpired(token) {
-    console.log("token", token);
     if (token) {
       try {
         const time = decode(token).exp;

@@ -2,6 +2,10 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Form, Button, Col, Row } from "react-bootstrap";
 
+import { connect } from "react-redux";
+import { compose } from "redux";
+import "./LoginForm.css";
+
 const validate = values => {
   const errors = {};
 
@@ -26,7 +30,12 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
     <Col sm="10">
       <Form.Control {...input} placeholder={label} type={type} />
     </Col>
-    {touched && (error && <span className="m-auto">{error}</span>)}
+    {touched &&
+      (error && (
+        <span className="m-auto" style={{ color: "red" }}>
+          {error}
+        </span>
+      ))}
   </>
 );
 
@@ -50,7 +59,7 @@ const LoginForm = props => {
           label="password"
         />
       </Form.Group>
-
+      {props.errLogin && <div className="mes-err">{props.errLogin}</div>}
       <Button variant="primary" type="submit" disabled={!valid}>
         Submit
       </Button>
@@ -58,7 +67,24 @@ const LoginForm = props => {
   );
 };
 
-export default reduxForm({
-  form: "form-login",
-  validate
-})(LoginForm);
+const mapStateToProps = state => {
+  return {
+    errLogin: state.authenUser.err
+  };
+};
+
+export default compose(
+  reduxForm({
+    form: "form-login",
+    validate
+  }),
+  connect(
+    mapStateToProps,
+    null
+  )
+)(LoginForm);
+
+// reduxForm({
+//   form: "form-login",
+//   validate
+// })(LoginForm);

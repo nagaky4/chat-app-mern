@@ -1,0 +1,20 @@
+%img-one-item {
+  width: 50px;
+  height: 50px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+}
+
+.chat-page {
+  display: flex;
+  .page-left {
+    flex: 1;
+  }
+  .page-right {
+    flex: 1;
+  }
+}
+// page left

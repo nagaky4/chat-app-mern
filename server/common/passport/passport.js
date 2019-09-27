@@ -5,34 +5,34 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 var config = require("config");
 var helper = require("../../helpers/helper");
-var userModal = require("../../modal/user/userModal");
+var accountModal = require("../../modal/account/accountModal");
 
 module.exports = function(app) {
   app.use(passport.initialize());
 
   passport.use(
-    "login-user-local",
+    "login-account-local",
     new localStrategy(
       {
         usernameField: "email",
         passwordField: "password"
       },
       (email, password, done) => {
-        userModal
-          .findUserByEmail(email)
+        accountModal
+          .findAccountByEmail(email)
           .then(data => {
             if (data) {
               if (helper.CheckPassWord(password, data.password)) {
-                var user = {
+                var account = {
                   _id: data._id,
                   email: data.email
                 };
-                return done(null, user);
+                return done(null, account);
               } else {
                 return done(null, false, { message: "password is wrong!" });
               }
             } else {
-              return done(null, false, { message: "user is not exists!" });
+              return done(null, false, { message: "account is not exists!" });
             }
           })
           .catch(err => {
@@ -52,14 +52,14 @@ module.exports = function(app) {
       function(jwtPayload, done) {
         console.log("TCL: jwtPayload", jwtPayload);
 
-        userModal
-          .findUserByEmail(jwtPayload.email)
+        accountModal
+          .findAccountByEmail(jwtPayload.email)
           .then(data => {
-            var user = {
+            var account = {
               _id: data._id,
               email: data.email
             };
-            return done(null, user);
+            return done(null, account);
           })
           .catch(err => {
             console.log(err);

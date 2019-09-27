@@ -1,0 +1,20 @@
+.profile-page {
+  display: flex;
+  padding: 20px;
+  .profi-left {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    .pf-l--button {
+      margin-top: 10px;
+    }
+  }
+  .profi-right {
+    flex: 1;
+    justify-content: center;
+    .btn-change-pass,
+    .btn-edit {
+      margin: auto;
+    }
+  }
+}

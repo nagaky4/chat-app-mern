@@ -3,17 +3,20 @@ import { connect } from "react-redux";
 import * as userActions from "../../actions/user";
 export class Logout extends Component {
   componentDidMount() {
+    const { history } = this.props;
     this.props.logout();
-    this.props.history.replace("/login");
+    history.push("/login");
   }
 
   render() {
     return null;
   }
 }
+
 const mapDispatchToProps = (dispatch, props) => {
   return {
     logout: () => {
+      console.log("click mà");
       dispatch(userActions.submitLogout());
     }
   };

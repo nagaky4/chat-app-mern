@@ -1,0 +1,114 @@
+%img-one-item {
+  width: 50px;
+  height: 50px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+}
+
+.p-chat-item-left {
+  clear: both;
+  opacity: 0;
+  .img-item {
+    @extend %img-one-item;
+    float: left;
+    margin-right: 10px;
+  }
+  .p-chat-text {
+    line-height: 50px;
+    margin-bottom: 0px;
+  }
+  .per-name {
+    margin-left: 10px;
+  }
+}
+.pl-search {
+  padding: 11px;
+}
+
+.pl-friends {
+  max-height: 400px;
+  overflow: auto;
+  .one-friend {
+    background: white;
+    margin: 5px;
+    padding: 10px;
+    display: table;
+    transition: 0.4s;
+    .img-item {
+      width: 100px;
+      height: 100px;
+      float: left;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+    }
+    .p-chat-text {
+      width: 80%;
+      vertical-align: middle;
+      display: table-cell;
+      padding-left: 10px;
+      overflow: hidden;
+    }
+    .p-chat-time {
+      display: table-cell;
+      vertical-align: middle;
+      width: 100%;
+    }
+    .per-name {
+      clear: both;
+      width: 100%;
+      display: table-row;
+      text-align: center;
+    }
+    .p-add-friend {
+      display: table-cell;
+      vertical-align: middle;
+      width: 100%;
+      padding: 24px;
+      font-size: 28px;
+      cursor: pointer;
+      color: #6eaabf;
+      transition: 0.4s;
+      :hover {
+        color: #54c1e8;
+      }
+    }
+  }
+  .one-friend:hover {
+    cursor: pointer;
+    background: #f3f3f3;
+  }
+}
+
+.pl-bar {
+  padding: 5px;
+}
+
+.page-left {
+  background: #e8eff1;
+}
+
+.pl-tools {
+  text-align: center;
+  font-size: 30px;
+  background: aliceblue;
+  display: flex;
+  margin-left: 5px;
+  .one-icon {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    margin: 10px;
+    transition: 0.4s;
+    cursor: pointer;
+  }
+
+  .one-icon:hover {
+    color: blue;
+  }
+}

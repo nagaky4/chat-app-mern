@@ -14,25 +14,35 @@ export class Register extends Component {
     };
   }
 
+  timer = null;
+
+  componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+  }
+
   handleSubmit = values => {
     this.setState({ ...this.state, isLoading: true });
     const user = values;
-    console.log(user);
     axios
-      .post(`${BASE_URL}/user`, { user: user })
+      .post(`${BASE_URL}/register`, { user: user })
       .then(res => {
         if (res && res.status === 200) {
-          console.log("insert success");
           this.setState({
             isLoading: false,
             registerSucces: true
           });
-          setTimeout(() => {
-            this.setState({
-              ...this.state,
-              registerSucces: false
-            });
-          }, 2000);
+          if (this.timer) {
+            clearTimeout(this.timer);
+          } else {
+            this.timer = setTimeout(() => {
+              this.setState({
+                ...this.state,
+                registerSucces: false
+              });
+            }, 2000);
+          }
         }
       })
       .catch(err => {
@@ -43,42 +53,40 @@ export class Register extends Component {
         });
       });
   };
+
   render() {
     return (
       <div className="app-login row">
-        <div className="col-sm-6 text-center">
-          <div className="p-login-left">
-            <div className="p-intro">
-              <div className="p-login-img">
-                <img src="/img/bg-1.png" alt="" />
-              </div>
-              <div className="pig-text">Happy app ^^</div>
-              <div className="normal-text"> make us closer together!</div>
+        <div className="p-login-left">
+          <div className="p-intro">
+            <div className="p-login-img">
+              <img src="/img/bg-1.png" alt="" />
             </div>
-            <div className="p-regis">
-              <Button
-                variant="primary"
-                type="submit"
-                onClick={() => this.props.history.push("/login")}
-              >
-                Login now
-              </Button>
-            </div>
+            <div className="pig-text">Happy app ^^</div>
+            <div className="normal-text"> make us closer together!</div>
+          </div>
+          <div className="p-regis">
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={() => this.props.history.push("/login")}
+            >
+              Login now
+            </Button>
           </div>
         </div>
-        <div className="col-sm-6">
-          <div className="p-login-right">
-            <div className="f-login">
-              <div className="big-text-login">Register</div>
-              <RegisterForm
-                onSubmit={this.handleSubmit}
-                isLoading={this.state.isLoading}
-                registerSucces={this.state.registerSucces}
-              />
-              {this.state.registerSucces && (
-                <NotifyPortal message="Đăng ký tài khoản thành công!" />
-              )}
-            </div>
+
+        <div className="p-login-right">
+          <div className="f-login">
+            <div className="big-text-login">Register</div>
+            <RegisterForm
+              onSubmit={this.handleSubmit}
+              isLoading={this.state.isLoading}
+              registerSucces={this.state.registerSucces}
+            />
+            {this.state.registerSucces && (
+              <NotifyPortal message="Đăng ký tài khoản thành công!" />
+            )}
           </div>
         </div>
       </div>

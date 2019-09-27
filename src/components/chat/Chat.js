@@ -1,8 +1,15 @@
-import React, { Component } from "react";
-
-class Chat extends Component {
+import React from "react";
+import "./Chat.scss";
+import PageChatLeft from "./pageLeft/PageChatLeft";
+import PageChatRight from "./pageRight/PageChatRight";
+class Chat extends React.PureComponent {
   render() {
-    return <div>Hello chat</div>;
+    return (
+      <div className="chat-page">
+        <PageChatLeft />
+        <PageChatRight />
+      </div>
+    );
   }
 }
 

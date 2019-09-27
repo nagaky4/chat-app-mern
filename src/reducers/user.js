@@ -22,7 +22,7 @@ export const userReducer = (state = initialState, action) => {
       return state;
     case types.LOG_OUT:
       Auth.loggedOut();
-      state = { ...initialState };
+      state = { ...initialState, isLogin: Auth.loggedIn() || false };
       return state;
     default:
       return state;
