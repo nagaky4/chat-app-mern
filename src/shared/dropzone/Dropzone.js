@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
+
 import request from "superagent";
 import "./Dropzone.scss";
 
@@ -35,16 +36,15 @@ const img = {
 };
 
 function Dropzone(props) {
-  const { api, paramName } = props;
+  const { api, email, onSuccess, onErr, paramName } = props;
   const [files, setFiles] = useState([]);
-  const id = "123213";
+
   const {
     getRootProps,
     getInputProps,
     isDragActive,
-    isDragReject,
+    isDragReject
   } = useDropzone({
-
     paramName: paramName,
     accept: "image/*",
     onDrop: acceptedFiles => {
@@ -55,15 +55,15 @@ function Dropzone(props) {
           });
         })
       );
-
       var req = request.post(api);
-      req.attach(paramName, acceptedFiles[0]);
+      req.attach(paramName, acceptedFiles[0]).field("email", email);
       req.end(function(err, res) {
         if (err) {
           console.log("error ocurred", err);
+          onErr();
+        } else {
+          onSuccess();
         }
-        console.log("res", res);
-        alert("File printing completed", res);
       });
     }
   });

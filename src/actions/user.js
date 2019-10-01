@@ -1,64 +1,39 @@
 import axios from "axios";
+import { BASE_URL } from "../const/index";
 import * as types from "../constantTypes/index";
 
-import { BASE_URL } from "../const/index";
-
-export const loginSuccess = data => {
+export const fetchUserPending = () => {
   return {
-    type: types.LOG_IN_SUCCESS,
-    payload: data
+    type: types.FETCH_USER_PENDING
   };
 };
 
-export const loginError = err => {
+export const fectUserSuccess = user => {
   return {
-    type: types.LOG_IN_ERROR,
-    payload: err
+    type: types.FETCH_USER_SUCCESS,
+    payload: user
   };
 };
 
-export const submitLogin = user => {
-  return dispatch =>
+export const fectUserError = () => {
+  return {
+    type: types.FETCH_USER_ERROR
+  };
+};
+
+export const fecthUser = email => {
+  return dispatch => {
+    dispatch(fetchUserPending());
     axios
-      .post(`${BASE_URL}/login`, user)
+      .get(`${BASE_URL}/user/${email}`)
       .then(res => {
-        if (res) {
-          dispatch(loginSuccess(res.data));
+        if (res.status === 200) {
+          dispatch(fectUserSuccess(res.data));
         }
       })
       .catch(err => {
-        dispatch(loginError(err.response.data.message));
+        console.log(err);
+        dispatch(fectUserSuccess(fectUserError()));
       });
-};
-
-export const registerSuccess = data => {
-  return {
-    type: types.LOG_IN_SUCCESS,
-    payload: data
-  };
-};
-
-export const registerError = err => {
-  return {
-    type: types.LOG_IN_ERROR,
-    payload: err
-  };
-};
-
-export const submitRegister = user => {
-  return dispatch =>
-    axios
-      .post(`${BASE_URL}/register`, user)
-      .then(res => {
-        if (res) {
-          dispatch(loginSuccess(res.data));
-        }
-      })
-      .catch(err => dispatch(loginError(err)));
-};
-
-export const submitLogout = () => {
-  return {
-    type: types.LOG_OUT
   };
 };

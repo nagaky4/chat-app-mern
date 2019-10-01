@@ -13,7 +13,8 @@ var userSchema = new mongoose.Schema(
       avatar: {
         type: String,
         default: "http://localhost:3000/public/images/user_default.png"
-      }
+      },
+      gender: { type: String, default: "" }
     },
     conversationIDs: [
       { type: mongoose.Schema.Types.ObjectId, ref: "accounts._id" }
@@ -98,7 +99,7 @@ function insertUser(email) {
     let user = {
       email: email,
       profile: {
-        firstName: email
+        firstName: email.split("@")[0]
       }
     };
     userModal.create(user, (err, data) => {
@@ -162,8 +163,8 @@ function updateUserAvatar(user) {
   if (user) {
     var defer = q.defer();
     userModal.updateOne(
-      { _id: user._id },
-      { profile: { avatar: user.avatar } },
+      { email: user.email },
+      { $set: { "profile.avatar": user.avatar } },
       (err, data) => {
         if (err) {
           console.log("update user avatar err ", err);

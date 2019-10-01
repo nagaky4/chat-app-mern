@@ -80,7 +80,7 @@ const RegisterForm = props => {
       </Form.Group>
 
       <Button variant="primary" type="submit" disabled={!valid}>
-        Submit {props.isLoading && <Spiner />}
+        Submit {props.isLoading && <Spiner width="20px" height="20px" />}
       </Button>
     </Form>
   );

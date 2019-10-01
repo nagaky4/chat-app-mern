@@ -21,7 +21,7 @@ class WithAuth extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthen: state.authenUser.isLogin
+    isAuthen: state.authen.isLogin
   };
 };
 

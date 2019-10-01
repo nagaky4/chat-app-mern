@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import * as userActions from "../../actions/user";
+import * as userActions from "../../actions/authen";
 export class Logout extends Component {
   componentDidMount() {
     const { history } = this.props;

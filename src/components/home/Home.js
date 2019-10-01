@@ -90,8 +90,8 @@ export class Home extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.authenUser.isLogin,
-    user: state.authenUser.user
+    isLogin: state.authen.isLogin,
+    user: state.authen.token
   };
 };
 

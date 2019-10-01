@@ -25,7 +25,7 @@ export default class AuthHelperMethods {
     return false;
   }
 
-  user = () => {
+  deToken = () => {
     const token = this.getToken();
     if (token) {
       if (!this.isTokenExpired(token)) {
@@ -43,4 +43,5 @@ export default class AuthHelperMethods {
   loggedOut = () => {
     localStorage.removeItem("token");
   };
+
 }

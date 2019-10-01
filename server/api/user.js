@@ -1,20 +1,21 @@
 var express = require("express");
 var router = express.Router();
 var multer = require("multer");
-var sizeOf = require("image-size");
+var fs = require("fs");
+// var sizeOf = require("image-size");
 var path = require("path");
 var userModal = require("../modal/users/userModal");
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    console.log("req.body", req.body);
-    console.log("req.file", req.file);
+    var dir = path.join(__dirname, "../public/images/user");
 
-    cb(null, path.join(__dirname, "../public/images/user"));
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    cb(null, dir);
   },
   filename: function(req, file, cb) {
-    console.log("req.body", req.body);
-    console.log("req.file", req.file);
     cb(null, Date.now() + "-" + file.originalname);
   }
 });
@@ -29,6 +30,23 @@ router.get("/users", (req, res) => {
       return res.status(200).json(data);
     })
     .catch(err => res.status(500).json(err));
+});
+
+router.get("/user/:email", (req, res) => {
+  var email = req.params.email;
+  console.log("req.param: ", req.params);
+  console.log("email email meail", email);
+  if (email)
+    userModal
+      .findUserByEmail(email)
+      .then(data => {
+        console.log("data", data);
+        res.status(200).json(data);
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      });
+  else res.status(400).json({ err: "no emaill" });
 });
 
 router
@@ -68,36 +86,45 @@ router
     }
   });
 
-router.post("/user/avatar", upload.single("userAvatar"), (req, res) => {
-  console.log("req", req.file);
-  console.log("req.params", req.params);
-  console.log("req.body", req.body);
-
+router.post("/user/avatar", upload.single("userAvatar"), async (req, res) => {
   if (!req.file.mimetype.startsWith("image/")) {
     return res.status(422).json({
       error: "this file upload must be an image"
     });
   }
-  // var dimensions = sizeOf(req.file.path);
-  // if (dimensions.width < 640 || dimensions.height < 480) {
-  //   return res.status(422).json({
-  //     error: "The image must be at least 640 x 480px"
-  //   });
-  // }
+
+  userModal
+    .findUserByEmail(req.body.email)
+    .then(data => {
+      var avatar = data.profile.avatar;
+      if (avatar && avatar.length > 0) {
+        var filename = avatar.split("/").pop();
+        var dir = path.join(__dirname, `../public/images/user/${filename}`);
+        try {
+          fs.unlinkSync(dir);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
   const user = {
-    _id: "",
-    avatar: ""
+    email: req.body.email,
+    avatar: `${req.protocol}://${req.get("host")}/images/user/${
+      req.file.filename
+    }`
   };
-  return res.status(200).send(req.file);
-  // try {
-  //   let isAvatarUpdated = await userModal.updateUserAvatar(user);
-  //   if (isAvatarUpdated) {
-  //     // return res.status(200).send(req.file);
-  //     return res.status(200).send(req.file);
-  //   }
-  // } catch (err) {
-  //   return res.status(500).send({ err: "Upload avatar failer" });
-  // }
+  try {
+    let isAvatarUpdated = await userModal.updateUserAvatar(user);
+    if (isAvatarUpdated) {
+      return res.status(200).json({ mess: "upload avatar successfully" });
+    }
+  } catch (err) {
+    return res.status(500).send({ err: "Upload avatar failer" });
+  }
 });
 
 module.exports = router;

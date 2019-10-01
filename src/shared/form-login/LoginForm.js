@@ -69,7 +69,7 @@ const LoginForm = props => {
 
 const mapStateToProps = state => {
   return {
-    errLogin: state.authenUser.err
+    errLogin: state.authen.err
   };
 };
 

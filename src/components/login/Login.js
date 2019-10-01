@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import "./Login.scss";
 import LoginForm from "../../shared/form-login/LoginForm";
 import { connect } from "react-redux";
-import * as userActions from "../../actions/user";
+import * as authenActions from "../../actions/authen";
 
 export class Login extends Component {
   handleLogin = values => {
@@ -57,13 +57,13 @@ export class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.authenUser.isLogin
+    isLogin: state.authen.isLogin
   };
 };
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     submitLogin: user => {
-      dispatch(userActions.submitLogin(user));
+      dispatch(authenActions.submitLogin(user));
     }
   };
 };

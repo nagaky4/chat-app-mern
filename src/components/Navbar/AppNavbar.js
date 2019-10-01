@@ -57,7 +57,7 @@ const AppNavbar = props => {
 
 const mapStateToProps = state => {
   return {
-    isLogin: state.authenUser.isLogin
+    isLogin: state.authen.isLogin
   };
 };
 
