@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var q = require("q");
 
+var helper = require("../../helpers/helper");
 /**
  * Account schema
  */
@@ -137,6 +138,45 @@ function updateAccountStatus(account) {
   }
   return false;
 }
+
+/**
+ * update password user rely on email
+ * @param {user} - Object user { email , password , newpassword}
+ */
+function updateAccountPassword(user) {
+  if (user) {
+    var defer = q.defer();
+    accountModal.findOne({ email: user.email }, (err, data) => {
+      if (err) {
+        console.log("find user password err ", err);
+        defer.reject(err);
+      }
+      if (data) {
+        console.log("data", data);
+
+        if (helper.CheckPassWord(user.password, data.password)) {
+          accountModal.updateOne(
+            { email: user.email },
+            { password: helper.HashPassword(user.newpassword) },
+            (err, data) => {
+              if (err) {
+                console.log("update user password err ", err);
+                defer.reject(err);
+              }
+              defer.resolve(data);
+            }
+          );
+        } else {
+          defer.reject({ errorMess: "Password is wrong" });
+        }
+      }
+    });
+
+    return defer.promise;
+  }
+  return false;
+}
+
 /**
  * delete account rely on _id
  * @param {account} - Object account {_id}
@@ -159,6 +199,7 @@ module.exports = {
   getAccounts,
   findAccountsByID,
   findAccountByEmail,
+  updateAccountPassword,
   insertAccount,
   updateAccount,
   updateAccountStatus,

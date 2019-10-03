@@ -27,7 +27,14 @@ class NotifyPortal extends Component {
     if (this.state.isOpen)
       return ReactDom.createPortal(
         <div className={classes.NotifyPortalContainer}>
-          <div className="alert alert-success" role="alert">
+          <div
+            className={
+              this.props.className
+                ? this.props.className
+                : "alert alert-success"
+            }
+            role="alert"
+          >
             {this.props.message}
             <span className="fa fa-check" style={{ fontSize: "30px" }}></span>
           </div>

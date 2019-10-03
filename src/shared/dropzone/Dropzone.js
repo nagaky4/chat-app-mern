@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-
 import request from "superagent";
+import { connect } from "react-redux";
 import "./Dropzone.scss";
+
+import * as userActions from "../../actions/user";
 
 const thumbsContainer = {
   display: "flex",
@@ -36,7 +38,7 @@ const img = {
 };
 
 function Dropzone(props) {
-  const { api, email, onSuccess, onErr, paramName } = props;
+  const { api, email, paramName } = props;
   const [files, setFiles] = useState([]);
 
   const {
@@ -60,9 +62,9 @@ function Dropzone(props) {
       req.end(function(err, res) {
         if (err) {
           console.log("error ocurred", err);
-          onErr();
+          props.uploadAvatarError("Up load image failed");
         } else {
-          onSuccess();
+          props.uploadAvatarSuccess(email, res.body.successMess);
         }
       });
     }
@@ -100,4 +102,16 @@ function Dropzone(props) {
   );
 }
 
-export default Dropzone;
+const mapDispatchToProps = dispatch => {
+  return {
+    uploadAvatarSuccess: (email, mess) =>
+      dispatch(userActions.uploadAvatarSuccess(email, mess)),
+    uploadAvatarError: errMess =>
+      dispatch(userActions.uploadAvatarError(errMess))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Dropzone);

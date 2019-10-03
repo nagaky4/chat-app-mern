@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Tabs, Tab } from "react-bootstrap";
-
+import { connect } from "react-redux";
+import * as findUserActions from "../../../actions/findUsers";
 import "./PageChatLeft.scss";
+import TabRight from "./TabRight";
+import TabLeft from "./TabLeft";
 
 export class PageChatLeft extends Component {
   constructor(props) {
@@ -10,6 +13,20 @@ export class PageChatLeft extends Component {
       key: "chat-list"
     };
   }
+  timmer = null;
+  onSearchUser = e => {
+    const { searchUser } = this.props;
+    const value = e.target.value;
+    if (this.timmer) {
+      clearTimeout(this.timmer);
+    }
+    if (this.state.key === "my-friends") {
+      this.timmer = setTimeout(() => {
+        searchUser(value);
+      }, 500);
+    }
+  };
+
   render() {
     return (
       <div className="page-left">
@@ -17,10 +34,9 @@ export class PageChatLeft extends Component {
           <input
             type="text"
             className="form-control"
-            name=""
-            id=""
             aria-describedby="helpId"
             placeholder="search"
+            onChange={this.onSearchUser}
           />
         </div>
 
@@ -33,49 +49,13 @@ export class PageChatLeft extends Component {
             eventKey="chat-list"
             title={<i className="one-icon fa fa-comment"> </i>}
           >
-            <div className="pl-friends">
-              <div className="one-friend">
-                <div className="img-item">
-                  <img src="/img/user2.jpg" alt="" />
-                </div>
-                <p className="p-chat-text">Hello how are you today</p>
-                <p className="p-chat-time">15:30 pm</p>
-                <div className="per-name">Nanako</div>
-              </div>
-              <div className="one-friend">
-                <div className="img-item">
-                  <img src="/img/user2.jpg" alt="" />
-                </div>
-                <p className="p-chat-text">Hello how are you today</p>
-                <p className="p-chat-time">yesterday</p>
-                <div className="per-name">Lisa</div>
-              </div>
-            </div>
+            <TabLeft />
           </Tab>
           <Tab
             eventKey="my-friends"
             title={<i className="one-icon fa fa-users"></i>}
           >
-            <div className="pl-friends">
-              <div className="one-friend">
-                <div className="img-item">
-                  <img src="/img/user2.jpg" alt="" />
-                </div>
-                <p className="p-add-friend">
-                  <i className="fa fa-user-plus"></i>
-                </p>
-                <div className="per-name">Nicky</div>
-              </div>
-              <div className="one-friend">
-                <div className="img-item">
-                  <img src="/img/user2.jpg" alt="" />
-                </div>
-                <p className="p-add-friend">
-                  <i className="fa fa-user-plus"></i>
-                </p>
-                <div className="per-name">Furry</div>
-              </div>
-            </div>
+            <TabRight />
           </Tab>
         </Tabs>
       </div>
@@ -83,4 +63,13 @@ export class PageChatLeft extends Component {
   }
 }
 
-export default PageChatLeft;
+const mapDispatchToProps = dispatch => {
+  return {
+    searchUser: value => dispatch(findUserActions.searchUser(value))
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PageChatLeft);

@@ -18,15 +18,13 @@ export class ProfileLeft extends Component {
   };
 
   render() {
-    const { user, token } = this.props;
+    const { user } = this.props;
     return (
       <div className="profi-left">
         {this.state.isUpdateAvatar ? (
           <Dropzone
             api={API}
-            email={token.email}
-            onSuccess={this.props.onSuccess}
-            onErr={this.props.onError}
+            email={user.email}
             paramName="userAvatar"
           />
         ) : (

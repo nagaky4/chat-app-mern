@@ -23,6 +23,7 @@ export default function MyRoute() {
           <Route path="/chat" exact={true} component={Chat} />
           <Route path="/profile" exact={true} component={Profile} />
         </WithAuth>
+        <Route path="/**" component={Login} />
       </Switch>
     </>
   );

@@ -22,7 +22,9 @@ router
     if (account) {
       accountModal
         .updateAccount(account)
-        .then(data => res.status(200).json(data))
+        .then(data =>
+          res.status(200).json({ successMess: "Account have updated" })
+        )
         .catch(err => res.status(500).json(err));
     } else {
       return res.status(400).json({ error: "bad request" });
@@ -33,7 +35,9 @@ router
     if (account) {
       accountModal
         .updateAccountStatus(account)
-        .then(data => res.status(200).json(data))
+        .then(data =>
+          res.status(200).json({ successMess: "Update account successfully!" })
+        )
         .catch(err => res.status(500).json(err));
     } else {
       return res.status(400).json({ error: "bad request" });
@@ -50,5 +54,22 @@ router
       return res.status(400).json({ error: "bad request" });
     }
   });
+
+router.patch("/account/password", (req, res) => {
+  var user = req.body.user;
+  accountModal
+    .updateAccountPassword(user)
+    .then(data => {
+      return res
+        .status(200)
+        .json({ successMess: "Update password successfully" });
+    })
+    .catch(err => {
+      if (err.errorMess) {
+        return res.status(400).json({ errorMess: err.errorMess });
+      } else
+        return res.status(500).json({ errorMess: "Internal Server Error " });
+    });
+});
 
 module.exports = router;
